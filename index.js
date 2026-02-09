@@ -24,11 +24,15 @@ app.post('/create', (req, res) => {
         res.redirect('/');
     });
 });
-// app.get('/about/:username', (req, res) => {
-//     const username = req.params.username;
-
-//     res.render('index', {
-//         page: 'about',
+app.get('/files/:filename', (req, res) => {
+    const filename = req.params.filename;
+    fs.readFile(`./files/${filename}`, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(404).send('File not found');
+        }
+        res.render('show', { filename: filename, content: data});
+    });
+});
 //         username: username
 //     });
 // });
